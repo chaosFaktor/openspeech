@@ -14,6 +14,7 @@ class Command:
     def __init__(self, raw_cmd) -> None:
         self.commands=raw_cmd.split(' und ')
         self.legitimated = None
+        self.override_legitimation = False
     
     class CmdWalker:
         def __init__(self, cmd):
@@ -50,12 +51,12 @@ def is_arrinstr(arr1, string):
 
 
 
-override_legitimation=False
+
 cli=''
 def run(raw_cmd):
     ## Parsing command
     cmd_object = Command(raw_cmd)
-    if not override_legitimation:
+    if not cmd_object.override_legitimation:
         cmd_object.legitimated= is_arrinstr(config.Personality.names, cmd_object.commands[0])
         for i in config.Personality.names:
             cmd_object.commands[0]=cmd_object.commands[0].replace(i+' ', '').replace(i, '')
@@ -65,17 +66,32 @@ def run(raw_cmd):
     if cmd_object.legitimated:
         with Command.CmdWalker(cmd_object) as walker:
             while walker.index < len(cmd_object.commands):
+                if True: pass   #   First if Statement with highest priority
 
-                if walker.check(['stelle dich vor', 'stell dich vor', 'sage hallo', 'sag hallo']):
+            #   Advanced-Legitimation-Detection (ALD) 
+                elif walker.check(['hi', 'hey', 'hai', 'hallo']):
+                    voice.speak_de(random.choice('hi', 'hey', 'hallo'))
+                    cmd_object.override_legitimation=True
+                elif walker.check(['bye', 'bei', 'schüss', 'schau', 'auf wiedersehen']):
+                    if random.randint(0, 1)==0:
+                        voice.speak_en('bye')
+                    else:
+                        voice.speak_de('auf wiedersehen')
+            
+            #   Intelligent curse counter offensive (ICCO)
+
+
+            #   Novelty Questions
+                elif walker.check(['stelle dich vor', 'stell dich vor', 'sage hallo', 'sag hallo']):
                     voice.speak_de_noEnd('Hallo ich bin ')
                     voice.say_name()
                     voice.speak_de(', ein sprachassistent basierend auf freier software.'),
                 
-                if walker.check(['fresse', 'klappe', 'maul']):
-                    voice.speak_de_noEnd('Selber, Du ')
-
-                    voice.speak_de_noDialog(config.Personality.curses_friendly[random.randint(0, len(config.Personality.curses_friendly)-1)])
+                
 
 
+                else:   #   Command could not be found
+                    pass
+                
                 walker.next()
 

@@ -1,5 +1,5 @@
 listen = False
-
+speak = False
 
 class Audio:
     samplerate = 44100*2
