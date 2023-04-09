@@ -34,14 +34,17 @@ class Command:
                 if i.lower() in self.cmd.commands[self.index]:
                     return True
             return False
-        def respond(self, requests, answer, lang='de'):
+        def respond(self, requests, answers, lang='de'):
             if self.check(requests):
-                if lang='de':
-                    voice.speak_de(answer)
-                elif lang='en':
-                    voice.speak_en(answer)
+                if lang=='de':
+                    voice.speak_de(random.choice(answers))
+                    return True
+                elif lang=='en':
+                    voice.speak_en(answers)
+                    return True
                 else:
                     print(0+'Fehler, sprache nicht gefunden')
+            return False
 
         
 
@@ -102,15 +105,18 @@ def run(raw_cmd):
                     voice.speak_de_noEnd('Hallo ich bin ')
                     voice.say_name()
                     voice.speak_de(', ein sprachassistent basierend auf freier software.')
-                walker.respond(['wie geht es dir', 'wie fühlst du dich'], 'ich fühle nicht aber mir geht es immer gut')
+                
             
             #   Music Player (MP)
-                elif walker.check(['spiele'])
-                
-
-
-                else:   #   Command could not be found
+                elif walker.check(['spiele']):
                     pass
+
+
+                else:   #   Command could not be found using check
+                    answered=walker.respond(['wie geht es dir', 'wie fühlst du dich'], ['mir geht es immer gut'])
                 
+
+                    if not answered:    # # #       Request could not be found (at all)
+                        
                 walker.next()
 
