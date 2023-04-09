@@ -7,7 +7,10 @@ class Audio:
     frames_per_buffer = 4096
     #frames_per_buffer = 2048
 
-    
+    musicPlayer='vlc'
+    mediaPlayer='vlc'
+    musicPlayerPaths=['./archive/music/']   #   Entrys must end with '/'
+
     class Voices:
         voice='espeak'
         class espeak:
@@ -18,6 +21,4 @@ class Audio:
 
 class Personality:
     names=['motto', 'moto'] # Motoko
-    curses_friendly=['evolutionsbremse', 'intelligenzverweigerer', 'sklaventreiber', 'hustensaftschmuggler', 'lackaffe', 'flitzpiepe', 'atomschlumpf', 'testosteron-chimpanse', 'offensivzwerg']
-    curses_lessfriendly=['wechselbalg', 'pissnelke']
-    curses_leastfriendly=['hurensohn', 'bastard', 'wichser', 'sohn einer hamburger hafen hure']
+
